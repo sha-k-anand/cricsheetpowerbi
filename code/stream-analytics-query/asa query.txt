@@ -1,0 +1,16 @@
+SELECT
+    i1.meta.filename,
+    i1.meta.created,
+    i1.info.city,
+    i1.info.match_type,
+    i1.innings,
+    i2.ArrayIndex,
+    i2.ArrayValue,
+    i3.PropertyValue.team,
+    i3.PropertyValue.deliveries,
+    i4.*
+FROM
+    [input0001] as i1
+    CROSS APPLY GetArrayElements(i1.innings) as i2
+    CROSS APPLY GetRecordProperties(i2.ArrayValue) as i3
+    CROSS APPLY GetArrayElements(i3.PropertyValue.deliveries) as i4
